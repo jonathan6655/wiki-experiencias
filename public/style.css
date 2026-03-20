@@ -1,0 +1,139 @@
+body {
+    font-family: Arial;
+    margin: 0;
+    background: linear-gradient(135deg, #0f172a, #020617);
+    color: white;
+}
+
+/* NAV */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1877f2;
+    padding: 10px 20px;
+}
+
+nav h1 {
+    color: white;
+}
+
+/* BOTONES */
+button {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    background: #38bdf8;
+    color: black;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* VISTAS */
+.view {
+    display: none;
+    padding: 20px;
+}
+
+.view.active {
+    display: block;
+}
+
+/* CARD */
+.card {
+    background: white;
+    color: black;
+    padding: 20px;
+    margin: 10vh auto;
+    width: 320px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* INPUTS */
+input, textarea {
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+}
+
+/* ARTÍCULOS */
+.article {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+
+/* CHAT */
+.chat-box {
+    height: 250px;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.msg-user {
+    background: #38bdf8;
+    color: black;
+    padding: 8px;
+    border-radius: 10px;
+    margin: 5px;
+    text-align: right;
+}
+
+.msg-bot {
+    background: #333;
+    padding: 8px;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+/* CHAT INPUT */
+.chat-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+}
+
+/* POSTS */
+.post-img{
+    width:100%;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+/* acciones */
+.actions{
+    display:flex;
+    gap:15px;
+    margin-top:10px;
+}
+
+.like{
+    cursor:pointer;
+    font-size:18px;
+}
+
+.like:hover{
+    transform: scale(1.2);
+}
+
+/* feed estilo */
+.article{
+    background: rgba(255,255,255,0.05);
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:15px;
+    backdrop-filter: blur(10px);
+}

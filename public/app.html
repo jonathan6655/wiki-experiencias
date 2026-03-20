@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>SocialApp PRO</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <h1>🔥 SocialApp</h1>
+    <div>
+        <button onclick="mostrar('feed')">Inicio</button>
+        <button onclick="mostrar('crear')">Crear</button>
+        <button onclick="mostrar('perfil')">Perfil</button>
+        <button onclick="mostrar('ia')">IA</button>
+        <button onclick="logout()">Salir</button>
+    </div>
+</nav>
+
+<!-- FEED -->
+<div id="feed" class="view active">
+    <div id="articles"></div>
+</div>
+
+<!-- CREAR -->
+<div id="crear" class="view">
+    <h2>Crear post</h2>
+    <input id="title" placeholder="Título">
+    <textarea id="content" placeholder="¿Qué estás pensando?"></textarea>
+    <input id="image" placeholder="URL imagen">
+    <button onclick="crearArticulo()">Publicar</button>
+</div>
+
+<!-- PERFIL -->
+<div id="perfil" class="view">
+    <h2>Tu perfil</h2>
+    <p id="usuarioActual"></p>
+    <div id="misPosts"></div>
+</div>
+
+<!-- IA -->
+<div id="ia" class="view">
+    <h2>🤖 IA</h2>
+    <div id="chat" class="chat-box"></div>
+    <div class="chat-input">
+        <input id="pregunta">
+        <button onclick="preguntarIA()">Enviar</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+mostrar("feed");
+</script>
+
+</body>
+</html> 
