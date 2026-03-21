@@ -61,23 +61,13 @@ app.get('/api/posts', async (req, res) => {
 // ================= IA REAL =================
 app.post('/api/ia', async (req, res) => {
     try {
-        const { pregunta } = req.body;
 
-        if (!pregunta) {
-            return res.json({ respuesta: "Escribe algo" });
-        }
+        const { pregunta } = req.body;
 
         const completion = await openai.chat.completions.create({
             model: "gpt-4.1-mini",
             messages: [
-                {
-                    role: "system",
-                    content: "Eres una IA estilo Wikipedia, responde claro, bien estructurado y fácil de entender."
-                },
-                {
-                    role: "user",
-                    content: pregunta
-                }
+                { role: "user", content: pregunta }
             ]
         });
 
@@ -86,9 +76,11 @@ app.post('/api/ia', async (req, res) => {
         });
 
     } catch (error) {
-        console.log("ERROR IA:", error);
+
+        console.log("🔥 ERROR REAL IA:", error);
+
         res.json({
-            respuesta: "Error con la IA (revisa tu API KEY o créditos)"
+            respuesta: "ERROR: " + error.message
         });
     }
 });
