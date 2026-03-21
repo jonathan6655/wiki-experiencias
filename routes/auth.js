@@ -1,72 +1,87 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
 
+const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const transporter = require("../config/mail");
 
-// ================= REGISTER =================
+/* ================= REGISTER ================= */
 router.post("/register", async (req, res) => {
-  const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-  const hash = await bcrypt.hash(password, 10);
-  const codigo = Math.floor(100000 + Math.random() * 900000);
+        const hash = await bcrypt.hash(password, 10);
+        const codigo = Math.floor(100000 + Math.random() * 900000).toString();
 
-  let user = await User.findOne({ email });
+        let user = await User.findOne({ email });
 
-  if (user) {
-    user.password = hash;
-    user.codigo = codigo;
-    user.verified = false;
-  } else {
-    user = new User({ email, password: hash, codigo });
-  }
+        if (user) {
+            user.password = hash;
+            user.codigo = codigo;
+            user.verified = false;
+        } else {
+            user = new User({
+                email,
+                password: hash,
+                codigo
+            });
+        }
 
-  await user.save();
+        await user.save();
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: "Verificación",
-    text: `Tu código es: ${codigo}`
-  });
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: "Código de verificación",
+            text: `Tu código es: ${codigo}`
+        });
 
-  res.json({ msg: "Código enviado 📧" });
+        console.log("Código:", codigo);
+
+        res.send({ ok: true });
+
+    } catch (error) {
+        console.log("ERROR REGISTER:", error);
+        res.status(500).send("error");
+    }
 });
 
-// ================= VERIFY =================
+/* ================= VERIFY ================= */
 router.post("/verify", async (req, res) => {
-  const { email, codigo } = req.body;
+    const { email, codigo } = req.body;
 
-  const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-  if (!user) return res.json({ error: "No existe" });
+    if (!user) return res.send({ ok: false });
 
-  if (user.codigo == codigo) {
-    user.verified = true;
-    user.codigo = null;
-    await user.save();
+    if (user.codigo === codigo) {
+        user.verified = true;
+        user.codigo = null;
+        await user.save();
 
-    res.json({ ok: true });
-  } else {
-    res.json({ error: "Código incorrecto" });
-  }
+        return res.send({ ok: true });
+    }
+
+    res.send({ ok: false });
 });
 
-// ================= LOGIN =================
+/* ================= LOGIN ================= */
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-  if (!user) return res.json({ error: "No existe" });
-  if (!user.verified) return res.json({ error: "Verifica tu correo" });
+    if (!user) return res.send({ ok: false });
 
-  const valid = await bcrypt.compare(password, user.password);
+    if (!user.verified) {
+        return res.send({ ok: false, msg: "Verifica tu cuenta" });
+    }
 
-  if (!valid) return res.json({ error: "Password incorrecto" });
+    const valid = await bcrypt.compare(password, user.password);
 
-  res.json({ ok: true });
+    if (valid) return res.send({ ok: true });
+
+    res.send({ ok: false });
 });
 
 module.exports = router;
