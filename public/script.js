@@ -1,71 +1,89 @@
-const API = "/api";
+const email = localStorage.getItem("email") || "demo@gmail.com";
 
-/* ================= REGISTER ================= */
-async function register() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("passReg").value;
+// CAMBIO DE VISTAS
+function showView(view){
+    document.querySelectorAll(".view").forEach(v => v.style.display="none");
+    document.getElementById(view).style.display="block";
 
-    if (!email || !password) {
-        alert("Llena todos los campos");
-        return;
-    }
-
-    await fetch(API + "/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-    });
-
-    alert("📧 Código enviado a tu correo");
+    if(view==="inicio") cargarPosts();
+    if(view==="perfil") cargarPerfil();
 }
 
-/* ================= VERIFY ================= */
-async function verify() {
-    const email = document.getElementById("email").value;
-    const codigo = document.getElementById("codigo").value;
+// PERFIL
+function cargarPerfil(){
+    document.getElementById("email").innerText = "Email: " + email;
+}
 
-    if (!codigo) {
-        alert("Ingresa el código");
-        return;
-    }
+// CREAR POST
+async function crearPost(){
 
-    const res = await fetch(API + "/verify", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, codigo })
+    const post = {
+        titulo: document.getElementById("titulo").value,
+        contenido: document.getElementById("contenido").value,
+        imagen: document.getElementById("imagen").value,
+        autor: email
+    };
+
+    await fetch('/api/posts',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(post)
     });
 
-    const data = await res.json();
+    alert("Artículo publicado 🚀");
+    showView("inicio");
+}
 
-    if (data.ok) {
-        alert("✅ Cuenta verificada");
-    } else {
-        alert("❌ Código incorrecto");
+// CARGAR POSTS
+async function cargarPosts(){
+
+    const res = await fetch('/api/posts');
+    const posts = await res.json();
+
+    const contenedor = document.getElementById("posts");
+    contenedor.innerHTML="";
+
+    posts.forEach(p=>{
+        contenedor.innerHTML += `
+        <div class="post">
+            <h2>${p.titulo}</h2>
+            <p>${p.contenido}</p>
+            ${p.imagen ? `<img src="${p.imagen}">` : ""}
+            <small>${p.autor}</small>
+        </div>
+        `;
+    });
+}
+
+// IA (simple simulada)
+async function usarIA(){
+
+    const pregunta = document.getElementById("pregunta").value;
+    const respuestaHTML = document.getElementById("respuesta");
+
+    respuestaHTML.innerText = "Pensando... 🤖";
+
+    try{
+        const res = await fetch('/api/ia', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ pregunta })
+        });
+
+        const data = await res.json();
+
+        respuestaHTML.innerText = data.respuesta;
+
+    }catch(err){
+        respuestaHTML.innerText = "Error conectando con la IA";
     }
 }
 
-/* ================= LOGIN ================= */
-async function login() {
-    const email = document.getElementById("user").value;
-    const password = document.getElementById("pass").value;
-
-    const res = await fetch(API + "/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-    });
-
-    const data = await res.json();
-
-    if (data.ok) {
-        window.location.href = "app.html";
-    } else {
-        alert("❌ Error al iniciar sesión");
-    }
+// LOGOUT
+function logout(){
+    localStorage.clear();
+    location.href="index.html";
 }
+
+// INICIO
+showView("inicio");

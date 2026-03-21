@@ -2,47 +2,66 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>SocialApp PRO</title>
+<title>Wiki Moderna</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="app">
+<div class="layout">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
-        <h2>🔥 SocialApp</h2>
+        <h2>📘 Wiki</h2>
 
-        <button>Inicio</button>
-        <button>Crear</button>
-        <button>Perfil</button>
-        <button>IA</button>
-        <button>Salir</button>
+        <button onclick="showView('inicio')">Inicio</button>
+        <button onclick="showView('crear')">Crear artículo</button>
+        <button onclick="showView('ia')">IA</button>
+        <button onclick="showView('perfil')">Perfil</button>
+        <button onclick="logout()">Salir</button>
     </aside>
 
-    <!-- CONTENIDO -->
-    <main class="content">
+    <main>
 
-        <div class="post-card">
-            <h2>Crear post</h2>
+        <!-- INICIO -->
+        <section id="inicio" class="view">
+            <h1>Artículos recientes</h1>
+            <div id="posts"></div>
+        </section>
 
-            <input placeholder="Título">
+        <!-- CREAR -->
+        <section id="crear" class="view">
+            <div class="card">
+                <h2>Nuevo artículo</h2>
 
-            <textarea placeholder="¿Qué estás pensando?"></textarea>
+                <input id="titulo" placeholder="Título">
+                <textarea id="contenido" placeholder="Contenido"></textarea>
+                <input id="imagen" placeholder="URL imagen">
 
-            <input placeholder="URL de imagen">
+                <button onclick="crearPost()">Publicar</button>
+            </div>
+        </section>
 
-            <button class="btn-primary">Publicar</button>
-        </div>
+        <!-- IA -->
+        <section id="ia" class="view">
+            <div class="card">
+                <h2>Asistente IA</h2>
+
+                <textarea id="pregunta" placeholder="Haz una pregunta..."></textarea>
+                <button onclick="usarIA()">Preguntar</button>
+
+                <p id="respuesta"></p>
+            </div>
+        </section>
+
+        <!-- PERFIL -->
+        <section id="perfil" class="view">
+            <h2>Perfil</h2>
+            <p id="email"></p>
+        </section>
 
     </main>
 
 </div>
 
 <script src="script.js"></script>
-<script>
-mostrar("feed");
-</script>
-
 </body>
-</html> 
+</html>
