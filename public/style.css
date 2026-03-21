@@ -1,139 +1,129 @@
-body {
-    font-family: Arial;
+/* RESET */
+* {
     margin: 0;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    color: white;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* NAV */
-nav {
+/* FONDO */
+body {
+    background: linear-gradient(135deg, #1e1b4b, #312e81, #6d28d9);
+    height: 100vh;
+}
+
+/* APP LAYOUT */
+.app {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #1877f2;
-    padding: 10px 20px;
+    height: 100vh;
 }
 
-nav h1 {
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    padding: 20px;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(15px);
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar h2 {
     color: white;
+    margin-bottom: 20px;
 }
 
-/* BOTONES */
-button {
-    padding: 8px 12px;
-    margin: 5px;
+.sidebar button {
+    padding: 12px;
+    border-radius: 12px;
     border: none;
-    background: #38bdf8;
-    color: black;
-    border-radius: 8px;
+
+    background: linear-gradient(45deg, #38bdf8, #9333ea);
+    color: white;
     cursor: pointer;
-    font-weight: bold;
+
+    transition: 0.3s;
 }
 
-button:hover {
-    transform: scale(1.05);
+.sidebar button:hover {
+    transform: translateX(5px);
 }
 
-/* VISTAS */
-.view {
-    display: none;
-    padding: 20px;
+/* CONTENIDO */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.view.active {
-    display: block;
+/* CARD POST */
+.post-card {
+    width: 420px;
+    padding: 30px;
+
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
-/* CARD */
-.card {
-    background: white;
-    color: black;
-    padding: 20px;
-    margin: 10vh auto;
-    width: 320px;
-    border-radius: 10px;
+/* TITULO */
+.post-card h2 {
+    color: white;
     text-align: center;
 }
 
 /* INPUTS */
-input, textarea {
+.post-card input,
+.post-card textarea {
     width: 100%;
-    margin: 8px 0;
-    padding: 10px;
-}
+    padding: 12px;
 
-/* ARTÍCULOS */
-.article {
+    border-radius: 12px;
+    border: none;
+
     background: rgba(255,255,255,0.1);
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
+    color: white;
+
+    transition: 0.3s;
 }
 
-/* CHAT */
-.chat-box {
-    height: 250px;
-    overflow-y: auto;
-    background: rgba(0,0,0,0.5);
-    padding: 10px;
-    border-radius: 10px;
+/* TEXTAREA FIX */
+textarea {
+    min-height: 100px;
+    resize: none;
 }
 
-.msg-user {
-    background: #38bdf8;
-    color: black;
-    padding: 8px;
-    border-radius: 10px;
-    margin: 5px;
-    text-align: right;
+/* FOCUS */
+input:focus,
+textarea:focus {
+    outline: none;
+    background: rgba(255,255,255,0.2);
+    box-shadow: 0 0 10px rgba(56,189,248,0.6);
 }
 
-.msg-bot {
-    background: #333;
-    padding: 8px;
-    border-radius: 10px;
-    margin: 5px;
+/* BOTON */
+.btn-primary {
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+
+    background: linear-gradient(45deg, #38bdf8, #9333ea);
+    color: white;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-/* CHAT INPUT */
-.chat-input {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.chat-input input {
-    flex: 1;
-}
-
-/* POSTS */
-.post-img{
-    width:100%;
-    border-radius:12px;
-    margin-top:10px;
-}
-
-/* acciones */
-.actions{
-    display:flex;
-    gap:15px;
-    margin-top:10px;
-}
-
-.like{
-    cursor:pointer;
-    font-size:18px;
-}
-
-.like:hover{
-    transform: scale(1.2);
-}
-
-/* feed estilo */
-.article{
-    background: rgba(255,255,255,0.05);
-    padding:15px;
-    border-radius:15px;
-    margin-bottom:15px;
-    backdrop-filter: blur(10px);
+.btn-primary:hover {
+    transform: scale(1.05);
 }

@@ -8,24 +8,16 @@
 <body>
 
 <div class="card">
-    <h2>Iniciar Sesión</h2>
+    <h2>Iniciar sesión</h2>
 
     <input id="user" placeholder="Correo">
     <input id="pass" type="password" placeholder="Contraseña">
 
     <button onclick="login()">Entrar</button>
 
-    <p>¿No tienes cuenta?</p>
-    <a href="register.html">Registrarse</a>
+    <a href="register.html">Crear cuenta</a>
 </div>
 
 <script src="script.js"></script>
-
-<script>
-if(localStorage.getItem("user")){
-    window.location.href = "app.html";
-}
-</script>
-
 </body>
 </html>

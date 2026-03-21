@@ -8,23 +8,25 @@
 <body>
 
 <div class="card">
-    <h2>Registro</h2>
+    <h2>Crear cuenta</h2>
 
     <input id="email" placeholder="Correo">
     <input id="passReg" type="password" placeholder="Contraseña">
 
-    <button onclick="register()">Crear cuenta</button>
+    <button onclick="register()">Registrarse</button>
 
-    <hr>
+    <div class="divider"></div>
 
-    <h3>Verificar</h3>
-    <input id="codigo" placeholder="Código">
-    <button onclick="verificar()">Verificar</button>
+    <h3>Verificar cuenta</h3>
 
-    <a href="index.html">Volver</a>
+    <input id="codigo" placeholder="Código de 6 dígitos">
+
+    <!-- 🔥 CORREGIDO -->
+    <button onclick="verify()">Verificar</button>
+
+    <a href="index.html">Ya tengo cuenta</a>
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
