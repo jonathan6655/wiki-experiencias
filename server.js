@@ -11,7 +11,7 @@ app.use(express.static("public"));
 
 // ================= DB =================
 mongoose.connect(process.env.MONGO_URI)
-.then(()=>console.log("🟢 Mongo conectado"))
+.then(()=>.log("🟢 Mongo conectado"))
 .catch(err=>console.log(err));
 
 // ================= MODELO =================
