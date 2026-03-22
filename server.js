@@ -1,92 +1,54 @@
-require("dotenv").config();
-
-const express = require("express");
-const path = require("path");
-
-const connectDB = require("./config/db");
-const authRoutes = require("./routes/auth");
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+require('dotenv').config();
 
 const app = express();
 
-const OpenAI = require("openai");
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
-
-
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
-
-// 🔥 conectar DB
+// conectar DB
 connectDB();
 
-// 🔥 rutas
-app.use("/api", authRoutes);
+// middlewares
+app.use(cors());
+app.use(express.json());
 
-// ===== MODELO POST =====
-const mongoose = require('mongoose');
+// rutas
+app.use('/api/auth', require('./routes/auth'));
 
-const PostSchema = new mongoose.Schema({
-    titulo: String,
-    contenido: String,
-    imagen: String,
-    autor: String,
-    fecha: { type: Date, default: Date.now }
-});
-
-const Post = mongoose.model('Post', PostSchema);
-
-// ===== CREAR ARTICULO =====
-app.post('/api/posts', async (req, res) => {
-    try{
-        const post = new Post(req.body);
-        await post.save();
-        res.json({ok:true});
-    }catch(err){
-        res.status(500).json({error: err.message});
-    }
-});
-
-// ===== OBTENER ARTICULOS =====
-app.get('/api/posts', async (req, res) => {
-    try{
-        const posts = await Post.find().sort({fecha:-1});
-        res.json(posts);
-    }catch(err){
-        res.status(500).json({error: err.message});
-    }
-});
-
-// ================= IA REAL =================
+// 🔥 IA GRATIS (Hugging Face)
 app.post('/api/ia', async (req, res) => {
     try {
-
         const { pregunta } = req.body;
 
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4.1-mini",
-            messages: [
-                { role: "user", content: pregunta }
-            ]
-        });
+        const response = await fetch(
+            "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1",
+            {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + process.env.HF_TOKEN,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    inputs: pregunta
+                })
+            }
+        );
+
+        const data = await response.json();
 
         res.json({
-            respuesta: completion.choices[0].message.content
+            respuesta: data[0]?.generated_text || "Sin respuesta"
         });
 
     } catch (error) {
-
-        console.log("🔥 ERROR REAL IA:", error);
-
-        res.json({
-            respuesta: "ERROR: " + error.message
-        });
+        console.log(error);
+        res.json({ respuesta: "Error IA" });
     }
 });
 
-// 🚀 servidor
+// servidor
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log("🚀 Servidor corriendo en puerto " + PORT);
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log("Servidor corriendo en puerto " + PORT);
 });
