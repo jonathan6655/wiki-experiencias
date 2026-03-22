@@ -14,6 +14,7 @@ app.use(express.json());
 
 // rutas
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/articulos', require('./routes/articulos'));
 
 // 🔥 IA GRATIS (Hugging Face)
 app.post('/api/ia', async (req, res) => {
