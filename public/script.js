@@ -24,7 +24,7 @@ async function crearPost(){
         autor: email
     };
 
-     const res = await fetch('https://TU-BACKEND.fly.dev/api/...',{
+     const res = await fetch('https://proyecto-def-snowy-frog-7863.fly.dev/api/...',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(post)
@@ -37,7 +37,7 @@ async function crearPost(){
 // CARGAR POSTS
 async function cargarPosts(){
 
-    const res = await fetch('https://TU-BACKEND.fly.dev/api/...');
+    const res = await fetch('https://proyecto-def-snowy-frog-7863.fly.dev/api/...');
     const posts = await res.json();
 
     const contenedor = document.getElementById("posts");
@@ -64,7 +64,7 @@ async function usarIA(){
     respuestaHTML.innerText = "Pensando... 🤖";
 
     try{
-        const res = await fetch('https://TU-BACKEND.fly.dev/api/ia', {
+        const res = await fetch('https://proyecto-def-snowy-frog-7863.fly.dev/api/ia', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ pregunta })
