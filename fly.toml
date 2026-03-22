@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for proyecto-def-muddy-firefly-2132 on 2026-03-21T21:55:50-06:00
+# fly.toml app configuration file generated for proyecto-def-quiet-glade-7105 on 2026-03-21T22:00:59-06:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'proyecto-def-muddy-firefly-2132'
+app = 'proyecto-def-quiet-glade-7105'
 primary_region = 'dfw'
 
 [build]
